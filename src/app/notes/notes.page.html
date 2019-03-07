@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/more"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis Notas</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="addNewNote()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="notes-container">
+  <ion-list #slidingList *ngIf="notesService.notes.length > 0">
+    <ion-item-sliding *ngFor="let note of notesService.notes">
+      <ion-item button detail (click)="goToNote(note)">
+        <ion-label>{{ note.title }}</ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="confirmNoteDeletion(note)">
+          <ion-icon name="trash"></ion-icon>  
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <p *ngIf="notesService.notes.length === 0" text-center>
+    <ion-text>
+      No existe ninguna nota guardada en la aplicación.     
+    </ion-text>
+  </p>
+</ion-content>

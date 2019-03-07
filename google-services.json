@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "597520813594",
+    "firebase_url": "https://ekklesia-9234c.firebaseio.com",
+    "project_id": "ekklesia-9234c",
+    "storage_bucket": "ekklesia-9234c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597520813594:android:611866705d6a2537",
+        "android_client_info": {
+          "package_name": "com.ekklesia.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597520813594-8b0lg2019hlunh4g8u5u0nps0v4eec6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-aOQu7WeNsR_2z-Tvey4fyATsZ7uqRKE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

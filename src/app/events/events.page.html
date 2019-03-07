@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>ekklenews</ion-title>
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content class="card-background-page">
+  <ion-card *ngFor="let event of events"  (click)="getEventDetails(event)">
+    <img [src]="event.banner"/>
+    <div class="card-title">{{event.title}}</div>
+    <div class="card-subtitle">{{event.subtitle}}</div>
+  </ion-card>
+</ion-content>

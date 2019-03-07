@@ -1,0 +1,8 @@
+{
+  "name": "ekklesia_mobile",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

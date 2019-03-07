@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/more"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Áreas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+  <ion-card *ngFor="let area of areas">
+    <img [src]="area.banner"/>
+    <div class="card-subtitle">{{area.title}}</div>
+  </ion-card>
+</ion-content>

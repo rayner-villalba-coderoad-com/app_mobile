@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Enseñanzas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let preaching of preachings">
+    <div class="banner-image">
+      <img [src]="preaching.banner"/>
+    </div>
+    <ion-card-content>
+      <ion-card-title>
+        {{preaching.title}}
+      </ion-card-title>
+      <p>
+        {{preaching.description}}
+      </p>
+    </ion-card-content>
+    <ion-row no-padding>
+        <ion-col size="5" *ngIf="preaching.videoLink !== ''">
+          <ion-button fill="clear" expand="full" color="danger" (click)="openVideo(preaching.videoId)">
+            <ion-icon name='videocam'></ion-icon>
+            Ver
+          </ion-button>
+        </ion-col>
+        <ion-col size="5" *ngIf="preaching.link !== ''">
+          <ion-button fill="clear" expand="full" color="danger" (click)="getPreachingDetails(preaching)">
+            <ion-icon name='book'></ion-icon>
+            Leer
+          </ion-button>
+        </ion-col>
+        <ion-col size="7">
+          <ion-button fill="clear" expand="full" color="secondary" (click)="share(preaching)">
+            <ion-icon name='share'></ion-icon>
+            Compartir
+          </ion-button>
+        </ion-col>
+      </ion-row>  
+  </ion-card>
+</ion-content>

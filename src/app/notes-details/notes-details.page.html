@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/more/notes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{note.title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveNote(note)">
+        <ion-icon name="checkbox-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-textarea [(ngModel)]="note.content" placeholder="Escribe..."></ion-textarea>
+</ion-content>

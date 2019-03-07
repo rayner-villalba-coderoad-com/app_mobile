@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-segment [(ngModel)]="segments" value="jesusModel">
+      <ion-segment-button value="jesusModel">
+        <ion-label>Modelo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="networks">
+        <ion-label>Redes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true">
+
+  <div [ngSwitch]="segments">
+    <div class="jesus-model" *ngSwitchCase="'jesusModel'" 
+      [parallaxHeader]="modelImgURL" 
+      [parallaxHeight]="260">
+      <div class="main-content">
+        <h2>NUESTRA VISIÓN Y MISIÓN EN EL MODELO</h2>
+        <p>"Id y haced discípulos a todos los bolivianos y las naciones, enseñándoles a guardar lo que Jesús nos mandó, por medio de grupos en casa, donde se nos enseña a dar la vida por los amigos."</p>
+        <p>Mateo 28:19-20 - Hechos 2:46 - Juan 15:13</p>
+      </div>
+    </div>
+
+    <div class="networks" *ngSwitchCase="'networks'">
+      <!-- <h1>Redes</h1> -->
+      <ion-list class="card-background-page">
+        <ion-card *ngFor="let network of networks">
+          <img [src]="network.banner"/>
+          <div class="card-title">{{network.title}}</div>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

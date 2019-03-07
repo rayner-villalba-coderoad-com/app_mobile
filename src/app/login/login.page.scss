@@ -1,0 +1,35 @@
+:host {
+  ion-content {
+      --background: var(--ion-color-primary);
+  }
+}
+
+.auth-content {
+  padding: 4rem 0 0;
+
+  .logo {
+    padding: 3rem 0;
+    width: 30%;
+    margin: 20px auto 8px;
+    background: url("/assets/img/logo2.png") no-repeat;
+    background-size: 100%;
+  }
+}
+
+
+ion-item {
+  --background: rgba(0,0,0,0);
+  --border-color: white;
+
+  ion-label {
+    color: wheat;
+  }
+  ion-input {
+    color: white;
+  }
+}
+
+.paz {
+  position: relative;
+  z-index: 10;
+}
