@@ -14,20 +14,46 @@ export class NotesPage implements OnInit {
   @ViewChild('slidingList') slidingList;
   notes: Note[];
   
-  constructor(private notesService: NotesService, private router: Router, private alertCtrl: AlertController) { }
+  constructor(public notesService: NotesService, private router: Router, private alertCtrl: AlertController) { 
+    
+  }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.notesService.load();
   }
 
-  addNewNote() {
-    const url = 'tabs/more/notes/newNote';
+  goToNote(noteId) {
+    const url = `tabs/more/notes/${noteId}`;
     this.router.navigateByUrl(url); 
   }
 
-  goToNote(note) {
-    const url = `tabs/more/notes/${note.id}`;
-    this.router.navigateByUrl(url); 
+  addNewNote() {
+    this.alertCtrl.create({
+      header: 'Nueva Nota',
+      message: '¿Cuál es el título de esta nota?',
+      inputs: [
+        {
+          type: 'text',
+          name: 'title',
+          placeholder: 'Título'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            this.notesService.createNote(data.title);
+            const id = this.notesService.getNoteId();
+            this.goToNote(id);
+          }
+        }
+      ]
+    }).then((alert) => {
+      alert.present();
+    });
   }
 
   confirmNoteDeletion(note) {
@@ -41,8 +67,8 @@ export class NotesPage implements OnInit {
         {
           text: 'Si',
           handler: async() => {
-            await this.slidingList.closeSlidingItems();
             this.notesService.deleteNote(note);
+            await this.slidingList.closeSlidingItems();
           }
         }
       ]

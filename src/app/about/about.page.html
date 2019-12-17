@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/tabs/more"></ion-back-button>
     </ion-buttons>
@@ -7,25 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" [parallaxHeader]="imageURL" [parallaxHeight]="260">
-  <div class="main-content">
-    <h1>CASA DE LA CASA</h1>
-    <div class="field-container">
-      <h2>Dirección</h2>
-      <p>Calle Colón esquina Mariscal Santa Cruz</p>
-    </div>
-    <div class="field-container">
-      <h2>Central Telefónica</h2>
-      <a (click)="call()">+591-2-2317178</a>
-    </div>
-    <div class="field-container">
-      <h2>Horarios de Reunión</h2>
-      <p>Domingo: 07:00 / 09:00 / 11:00 / 19:00</p>
-      <p>Miércoles: 19:00</p>
-    </div> 
-    <div class="field-container">
-      <h2>Email</h2>
-      <a>contacto@ekklesia.net</a>
-    </div>
-  </div>
+<ion-content class="branches-information">
+  <ion-list>
+    <ion-item button detail 
+              *ngFor="let branch of (branches$ | async)" 
+              (click)="getBranchDetail(branch)">
+      <ion-avatar>
+        <img [src]="branch.banner || defaultImage"/>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{branch.city}}</h2>
+      </ion-label>  
+    </ion-item>    
+  </ion-list>
 </ion-content>

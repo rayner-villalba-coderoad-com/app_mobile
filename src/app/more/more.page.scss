@@ -1,12 +1,11 @@
 .grid-options {
-  margin: 4.5rem 0;
+  padding: 0;
   .options-menu {
     ion-card {
-      margin: 25px 8px 0;
-      img {
-        display: block;
+      margin: 10px 8px 0;
+      ion-icon {
         width: 100%;
-        height: 120px;
+        font-size: 6rem;
       }
       .card-title {
         padding: 5px 0;

@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="/tabs/more/areas"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="area-information" [scrollEvents]="true" *ngIf="detail$ | async as detail" [parallaxHeader]="detail.path" [parallaxHeight]="215" [parallaxPixel]="true">
+  <div class="main-content">
+    <h4 *ngIf="detail.subtitle">{{detail.subtitle}}</h4>
+    <p class="description">{{detail.description}}</p>
+    <div class="field-container" *ngIf="detail.contact">
+      <ion-text color="primary">
+        <h4>Contacto</h4>
+      </ion-text>
+      <ion-button fill="clear" color="primary" (click)="call(detail.contact)">
+        <ion-icon name="call"></ion-icon>
+        {{detail.contact}}
+      </ion-button>
+    </div>
+    <ion-grid class="btn-group" *ngIf="detail.subarea && detail.subarea2">
+      <ion-row>
+        <ion-col size="6">
+          <ion-card (click)="openLink(detail.linkSubArea)">
+            <img [src]="detail.subareaPath"/>
+            <div class="card-title">{{detail.subarea}}</div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card (click)="openLink(detail.linkSubArea2)">
+            <img [src]="detail.subarea2Path"/>
+            <div class="card-title">{{detail.subarea2}}</div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+  </div>
+</ion-content>

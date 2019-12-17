@@ -1,17 +1,20 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" mode="ios">
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/tabs/more/notes"></ion-back-button>
     </ion-buttons>
     <ion-title>{{note.title}}</ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="confirmNoteDeletion(note)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
       <ion-button (click)="saveNote(note)">
-        <ion-icon name="checkbox-outline"></ion-icon>
+        <ion-icon src="assets/save-solid.svg"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-textarea [(ngModel)]="note.content" placeholder="Escribe..."></ion-textarea>
+  <ion-textarea [(ngModel)]="note.content" placeholder="Escribe tu nota ..." autofocus="true" debounce="650" (ionChange)="updateNote()"></ion-textarea>
 </ion-content>

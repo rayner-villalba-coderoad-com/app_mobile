@@ -6,8 +6,9 @@ import { Note } from './note.model';
   providedIn: 'root'
 })
 export class NotesService {
-  public notes: Note[] = [];
+  notes: Note[] = [];
   public loaded: boolean = false;
+  public noteId: string;
 
   constructor(private storage: Storage) { }
 
@@ -32,15 +33,20 @@ export class NotesService {
     return this.notes.find(note => note.id === id);
   }
     
-  createNote(note): void {
+  createNote(title): void {
     let id = Math.max(...this.notes.map(note => parseInt(note.id)), 0) + 1;
+    this.noteId = id + '';
     this.notes.push({
-      id: id.toString(),
-      title: note.title,
-      content: note.content
+      id: this.noteId,
+      title: title,
+      content: ''
     });
     
     this.save();
+  }
+
+  getNoteId() {
+    return this.noteId;
   }
     
   deleteNote(note): void {

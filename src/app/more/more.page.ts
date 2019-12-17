@@ -7,7 +7,7 @@ import { AlertController } from "@ionic/angular";
 export interface Option {
   id: number;
   label: string;
-  banner: string;
+  icon: string;
   path: string;
 }
 
@@ -26,28 +26,40 @@ export class MorePage implements OnInit {
       {
         id: 1,
         label: 'Informaciones',
-        banner: 'https://mw2.google.com/mw-panoramio/photos/medium/16804553.jpg',
+        icon: 'assets/info-circle-solid.svg',
         path: 'about'
       },
       {
         id: 2,
         label: 'Mis Notas',
-        banner: 'https://www.faq-mac.com/wp-content/uploads/2016/02/Notas3-1132x670.jpg',
+        icon: 'assets/clipboard-list-solid.svg',
         path: 'notes'
       },
       {
         id: 3,
         label: 'Áreas',
-        banner: 'https://bloximages.newyork1.vip.townnews.com/myhorrynews.com/content/tncms/assets/v3/editorial/a/4a/a4ae77fe-cfe5-11e3-9450-0017a43b2370/53601a60cbea0.image.jpg',
+        icon: 'assets/puzzle-piece-solid.svg',
         path: 'areas'
       },
       {
         id: 4,
-        label: 'Salir',
-        banner: 'https://image.flaticon.com/icons/svg/58/58452.svg',
-        path: 'logout'
+        label: 'Perfil',
+        icon: 'assets/user-circle-regular.svg',
+        path: 'profile'
+      },
+      {
+        id: 5,
+        label: 'Enlaces',
+        icon: 'assets/external-link-alt-solid.svg',
+        path: 'links'
+      },
+      {
+        id: 6,
+        label: 'Wallpapers',
+        icon: 'assets/images-regular.svg',
+        path: 'wallpapers'
       }
-    ]
+    ];
   }
 
   confirmLogout() {
@@ -76,13 +88,11 @@ export class MorePage implements OnInit {
   }
 
   goToOption(option) {
-    console.log(option);
     if (option.path === 'logout') {
       this.confirmLogout();
     } else {
       const url = `tabs/more/${option.path}`;
       this.router.navigateByUrl(url);
     }
-   
   }
 }

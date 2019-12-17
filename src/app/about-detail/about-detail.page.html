@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-toolbar color="primary" mode="ios">
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="/tabs/more/about"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="branch-information" [scrollEvents]="true" *ngIf="detail$ | async as detail" [parallaxHeader]="detail.banner || defaultImage" [parallaxHeight]="40">
+  <div class="main-content">
+    <div class="field-detail">
+      <ion-text color="primary">
+        <h4>Dirección</h4>
+      </ion-text>
+      <h5 *ngIf="detail.name">{{detail.name}}</h5>
+      <p>{{detail.address}}</p>
+    </div>
+
+    <div class="field-detail">
+      <ion-text color="primary">
+        <h4>Horarios de Reunión</h4>
+      </ion-text>
+      <p *ngFor="let meeting of detail.meetings">
+        {{meeting}}
+      </p>
+    </div>
+
+    <div class="field-detail" *ngIf="detail.contact">
+      <ion-text color="primary">
+        <h4>Contacto {{detail.name}}</h4>
+      </ion-text>
+      <ion-button fill="clear" color="primary" (click)="call(detail.contact)">
+        <ion-icon name="call"></ion-icon>
+        {{detail.contact}}
+      </ion-button>
+    </div>
+
+    <div class="field-detail" *ngIf="detail.address2">
+      <ion-text color="primary">
+        <h4>Dirección</h4>
+      </ion-text>
+      <h5 *ngIf="detail.name2">{{detail.name2}}</h5>
+      <p>{{detail.address2}}</p>
+    </div>
+    <div class="field-detail" *ngIf="detail.meetings2">
+      <ion-text color="primary">
+        <h4>Horarios de Reunión</h4>
+      </ion-text>
+      <p *ngFor="let meeting of detail.meetings2">
+        {{meeting}}
+      </p>
+    </div>
+    <div class="field-detail" *ngIf="detail.contact2">
+      <ion-text color="primary">
+        <h4>Contacto {{detail.name2}}</h4>
+      </ion-text>
+      <ion-button fill="clear" size="small" color="primary" (click)="call(detail.contact2)">
+        <ion-icon name="call"></ion-icon>
+        {{detail.contact2}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

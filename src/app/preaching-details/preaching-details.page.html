@@ -6,17 +6,94 @@
     </ion-toolbar>
   </ion-header>
   
-<ion-content [scrollEvents]="true" [parallaxHeader]="preaching?.banner" [parallaxHeight]="200">
+<ion-content [scrollEvents]="true" *ngIf="preaching$ | async as preaching" [parallaxHeader]="preaching.banner" [parallaxHeight]="50">
   <div class="main-content">
-    <h1>{{preaching.title}}</h1>
-    <p class="text-justify">{{preaching.fullText}}</p>
-  
-    <div class="share">
-      <h4>Compartir:</h4>
-      <ion-icon slot="icon-only" class="whatsapp" (click)="shareWhatsapp(preaching)"name="logo-whatsapp"></ion-icon>
-      <ion-icon slot="icon-only" class="facebook" (click)="shareFacebook(preaching)"name="logo-facebook"></ion-icon>
-      <ion-icon slot="icon-only" class="twitter" (click)="shareTwitter(preaching)"name="logo-twitter"></ion-icon>
+    <!-- <div class="title-preoaching">
+      <ion-text color="primary" >
+        <h3>{{preaching.title}}</h3>
+        <h5 class="subtitle">{{preaching.subtitle}}</h5>
+      </ion-text>
+       
+    </div> -->
+
+    <ion-item class="preaching-titles">
+      <ion-label>
+        <h2>{{preaching.title}}</h2>
+        <p>{{preaching.subtitle}}</p>
+      </ion-label>
+      <!-- <p *ngIf="preaching.progress> 0 && preaching.progress < 100" 
+          color="primary" 
+      >{{preaching.progress}}%</p> -->
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="cloud-download"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <!-- <ion-row no-padding>
+      <ion-col size="4">
+        <ion-button class="preaching-button" fill="clear" expand="full" (click)="share(preaching)">
+          <ion-icon name='videocam'></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button class="preaching-button"fill="clear" expand="full" (click)="share(preaching)">
+          <ion-icon src="assets/headphones-solid.svg"></ion-icon>
+        </ion-button>
+      </ion-col>  
+      <ion-col size="4">
+        <ion-button class="preaching-button" fill="clear" expand="full"(click)="share(preaching)">
+          <ion-icon name='book'></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row> -->
+    <div class="preaching-buttons">
+      <ion-button class="preaching-button" fill="clear" expand="full" (click)="share(preaching)">
+        <ion-icon name='videocam'></ion-icon>
+      </ion-button>
+      <ion-button class="preaching-button"fill="clear" expand="full" (click)="share(preaching)">
+        <ion-icon src="assets/headphones-solid.svg"></ion-icon>
+      </ion-button>
+      <ion-button class="preaching-button" fill="clear" expand="full"(click)="share(preaching)">
+        <ion-icon name='book'></ion-icon>
+      </ion-button>
     </div>
+    <!-- <div class="verse" text-center *ngIf="preaching.verse">
+      <p>{{preaching.verse.content}}</p>
+      <h5 *ngIf="preaching.verse.name">{{preaching.verse.name}}</h5>
+    </div>
+    <div class="description">
+      <div class="paragraph" *ngFor="let content of preaching.contents">
+        <ion-text>
+          <h4>{{content.subtitle}}</h4>
+        </ion-text> 
+        <p>{{content.content}}</p>
+      </div>
+    </div>
+    
+    <div class="praying" *ngIf="preaching.praying">
+      <ion-text>
+        <h4>Oración</h4>
+      </ion-text>  
+      <p text-center>{{preaching.praying}}</p>
+    </div>
+    <ion-row no-padding>
+      <ion-col size="7">
+        <ion-text *ngIf="preaching.subtitle" color="warning">
+          <p class="subtitle">{{preaching.subtitle}}</p>
+        </ion-text> 
+      </ion-col>  
+      <ion-col size="5">
+        <ion-button class="share-button" fill="clear" expand="full" color="primary" (click)="share(preaching)">
+          <ion-icon name='share'></ion-icon>
+          Compartir
+        </ion-button>
+      </ion-col> 
+    </ion-row> -->
+    <!-- <ion-button fill="clear" expand="full" color="primary" (click)="share(preaching)">
+      <ion-icon name='share'></ion-icon>
+      Compartir
+    </ion-button>     -->
+    <!-- </div> -->
   </div>
 </ion-content>
   

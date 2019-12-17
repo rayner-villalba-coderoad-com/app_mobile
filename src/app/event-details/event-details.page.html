@@ -1,22 +1,29 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/tabs/ekklenews"></ion-back-button>
+      <ion-back-button text="" defaultHref="/tabs/events"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" [parallaxHeader]="eventEk?.banner" [parallaxHeight]="200">
+<ion-content [scrollEvents]="true" *ngIf="eventEk$ | async as eventEk" [parallaxHeader]="eventEk?.banner" [parallaxHeight]="35">
   <div class="main-content">
-    <h1>{{eventEk.title}}</h1>
-    <p>{{eventEk.description}}</p>
-
-    <div class="share">
-      <h4>Compartir:</h4>
-    
-      <ion-icon slot="icon-only" class="whatsapp" (click)="shareWhatsapp(eventEk)"name="logo-whatsapp"></ion-icon>
-      <ion-icon slot="icon-only" class="facebook" (click)="shareFacebook(eventEk)"name="logo-facebook"></ion-icon>
-      <ion-icon slot="icon-only" class="twitter" (click)="shareTwitter(eventEk)"name="logo-twitter"></ion-icon>
+    <h1 text-center>{{eventEk.title}}</h1>
+    <div class="share-button">
+      <ion-button class="share-button" fill="clear" expand="full" color="primary" (click)="share(eventEk)">
+        <ion-icon name='share'></ion-icon>
+        Compartir
+      </ion-button>
+    </div> 
+    <p class="description">{{eventEk.description}}</p>
+    <div class="field-detail" *ngIf="eventEk.contact">
+      <ion-text color="primary">
+        <h4>Más Información</h4>
+      </ion-text>
+      <ion-button fill="clear" color="primary" (click)="call(eventEk.contact)">
+        <ion-icon name="call"></ion-icon>
+        {{eventEk.contact}}
+      </ion-button>
     </div>
   </div>
 </ion-content>

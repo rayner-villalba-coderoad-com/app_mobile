@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title text-center>Escríbenos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-list-header>Escríbenos por:</ion-list-header>
+  <ion-button shape="round" fill="outline" expand="full" color="primary" (click)="sendWhatsappMessage()">
+    <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+    Whatsapp
+  </ion-button>
+  <ion-list-header>O puedes llenar este formulario:</ion-list-header>
+  <!-- Register form -->
+  <form [formGroup]="onPrayingForm" class="list-form">
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="person" item-start></ion-icon>
+        Nombre
+      </ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <p ion-text class="text08" *ngIf="onPrayingForm.get('name').touched && onPrayingForm.get('name').hasError('required')">
+      <ion-text color="warning">
+        Campo requerido
+      </ion-text>
+    </p>
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="call" item-start></ion-icon>
+        Celular o Teléfono
+      </ion-label>
+      <ion-input type="tel" formControlName="phone"></ion-input>
+    </ion-item>
+    <p ion-text class="text08" *ngIf="onPrayingForm.get('phone').touched && onPrayingForm.get('phone').hasError('required')">
+      <ion-text color="warning">
+        Campo requerido
+      </ion-text>
+    </p>
+
+    <ion-item no-padding class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="clipboard" item-start></ion-icon>
+        Petición de Oración 
+      </ion-label>
+      <ion-textarea textarea class="article_text" formControlName="prayFor"
+                    type="text" rows="7"></ion-textarea>
+    </ion-item>
+    <p ion-text color="warning" class="text08" *ngIf="onPrayingForm.get('prayFor').touched && onPrayingForm.get('prayFor').hasError('required')">
+      <ion-text color="warning">
+        Campo requerido
+      </ion-text>
+    </p>
+  </form>
+
+  <div margin-top>
+    <ion-button icon-left size="medium" expand="full" shape="round" color="primary" (click)="send(onPrayingForm)"
+      tappable>
+      <ion-icon name="mail"></ion-icon>
+        Enviar
+      </ion-button>
+  </div>  
+</ion-content>

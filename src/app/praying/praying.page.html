@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" mode="ios">
     <ion-title>Oramos Por Ti</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [scrollEvents]="true" [parallaxHeader]="imageURL" [parallaxHeight]="260">
+<ion-content [scrollEvents]="true" [parallaxHeader]="imageURL" [parallaxHeight]="40">
   <div class="main-content">
     <h1>Petición de Oración</h1>
     <p>Estamos interesados en ti y en tus necesidades, y creemos que Dios responderá toda petición que hagamos de común acuerdo. 
@@ -12,13 +12,13 @@
       <ion-row>
         <ion-col size="6">
           <ion-button shape="round" expand="full" color="primary" (click)="call()">
-            <ion-icon slot="end" name="call"></ion-icon>
+            <ion-icon slot="start" name="call"></ion-icon>
             Llámanos
           </ion-button>
         </ion-col>
         <ion-col size="6">
-          <ion-button shape="round" expand="full" color="medium">
-            <ion-icon slot="end" name="clipboard"></ion-icon>
+          <ion-button shape="round" expand="full" color="warning" (click)="openPrayingModal()">
+            <ion-icon slot="start" name="clipboard"></ion-icon>
             Escríbenos
           </ion-button>
         </ion-col>

@@ -2,24 +2,22 @@
   ion-card {
     position: relative;
     text-align: center;
-      
-    .card-title {
-      position: absolute;
-      top: 36%;
-      font-size: 2.0em;
-      width: 100%;
-      font-weight: bold;
-      color: #fff;
+
+    ion-card-content {
+      padding: 0;
+
+      .share-button {
+		    margin-left: 50%;
+      }
+      p {
+        margin: 0 10px;
+      }
     }
-      
-    .card-subtitle {
-      font-size: 1.5em;
-      position: absolute;
-      top: 80%;
-      width: 100%;
-      color: #ffd866;
-      font-weight: bold;
-    }
+  }
+
+  .empty-message {
+    margin-top: 50%;
+    padding: 20px;
   }
 } 
 

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PrayingPage } from './praying.page';
 import { DirectivesModule } from '@directives/directives.module';
+import { ModalsModule } from '@modals/modals.module';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     DirectivesModule,
+    ModalsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PrayingPage]

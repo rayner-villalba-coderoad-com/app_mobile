@@ -18,10 +18,15 @@
       "es2018",
       "dom"
     ],
+    "types": [
+      "hammerjs"
+    ],
     "paths": {
       "@env/*": ["src/environments/*"],
       "@services/*": ["src/app/services/*"],
-      "@directives/*": ["src/app/directives/*"]
+      "@directives/*": ["src/app/directives/*"],
+      "@modals/*": ["src/app/modals/*"],
+      "@animations/*": ["src/app/animations/*"]
     }
   }
 }

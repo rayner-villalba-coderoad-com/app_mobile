@@ -25,11 +25,11 @@ export class MinistriesPage implements OnInit {
     }, {
       id: 3,
       banner: '/assets/img/jovenes.jpg',
-      title: 'Red de Jovenes'
+      title: 'Red de Jóvenes'
     }, {
       id: 4,
       banner: '/assets/img/jovenes-adultos.jpg',
-      title: 'Red de Jovenes Adultos'
+      title: 'Red de Jóvenes Adultos'
     }, {
       id: 5,
       banner: '/assets/img/profesionales.jpg',
@@ -37,7 +37,7 @@ export class MinistriesPage implements OnInit {
     }, {
       id: 6,
       banner: '/assets/img/matrimonio-joven.jpg',
-      title: 'Red de Matromonios Jovenes'
+      title: 'Red de Matromonios Jóvenes'
     }, {
       id: 7,
       banner: '/assets/img/matrimonio.jpg',

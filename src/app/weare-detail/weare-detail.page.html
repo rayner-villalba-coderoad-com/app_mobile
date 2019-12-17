@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/weare"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{(weAreType === 'ministries') ? 'Ministerios' : 'Redes' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content>
+  <div *ngIf="loading" class="spinner-container">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  <ion-list class="card-image-page" *ngIf="!loading"> 
+    <ion-card *ngFor="let content of (contents$ | async)" (click)="getInformation(content)">
+      <img [src]="content.path"/>
+    </ion-card>
+  </ion-list>
+</ion-content>

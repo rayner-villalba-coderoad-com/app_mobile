@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-title>Nosotros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true" [parallaxHeader]="imageURL" [parallaxHeight]="40" class="weare">
+  <div class="main-content">
+    <ion-text color="primary">
+      <h4 text-center>Ekklesía</h4>
+    </ion-text>
+    <p class="mision">Iglesia Cristiana, nacida durante el avivamiento más grande de América Latina.</p>
+    <p class="mision">Nuestra Misión: "Id y haced discípulos a todos los Bolivianos y las naciones, enseñándoles a guardar lo que Jesús nos mandó, por medio de grupos en casa, donde se nos enseña a dar la vida por los amigos"</p>
+    <p text-center>Mateo 28:19-20 - Hechos 2:46 - Juan 15:13</p>
+    <ion-grid class="btn-group">
+      <ion-row>
+        <ion-col size="6">
+          <ion-card (click)="goToMinistries()">
+            <img src="/assets/img/ministerios.png" class="no-padding-bottom"/>
+            <div class="card-title">Ministerios</div>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card (click)="goToNetworks()">
+            <img src="/assets/img/redes.png" class="no-padding-bottom"/>
+            <div class="card-title">Redes</div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card (click)="goToEkkids()">
+            <img src="/assets/img/ekkids.png" class="ekkids"/>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card (click)="goToEkkleunder()">
+            <img src="/assets/img/ekkleunder.png"/>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

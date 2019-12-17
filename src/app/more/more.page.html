@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" mode="ios">
       <ion-title>Más</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
     <ion-row>
       <ion-col *ngFor="let option of options" size="6" no-padding class="options-menu">
         <ion-card (click)="goToOption(option)">
-          <img [src]="option.banner"/>
+          <ion-icon [src]="option.icon"></ion-icon>
           <div class="card-title">{{option.label}}</div>
         </ion-card>
       </ion-col> 

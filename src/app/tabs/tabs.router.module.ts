@@ -8,12 +8,12 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'ekklenews',
+        path: 'events',
         children: [
           {
             path: '',
             loadChildren: '../events/events.module#EventsPageModule'
-          }, 
+          },
           {
              path: ':eventId',
             loadChildren: '../event-details/event-details.module#EventDetailsPageModule'
@@ -30,7 +30,11 @@ const routes: Routes = [
           {
             path: ':preachingId',
             loadChildren: '../preaching-details/preaching-details.module#PreachingDetailsPageModule'
-         }
+          },
+          {
+            path: ':preachingId/reading',
+            loadChildren: '../preaching-reading/preaching-reading.module#PreachingReadingPageModule'
+          }
         ]
       },
       {
@@ -43,12 +47,28 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'ministries',
+        path: 'weare',
         children: [
           {
             path: '',
-            loadChildren: '../ministries/ministries.module#MinistriesPageModule'
-          }
+            loadChildren: '../weare/weare.module#WearePageModule'
+          },
+          {
+            path: ':weAreType',
+           loadChildren: '../weare-detail/weare-detail.module#WeareDetailPageModule'
+          },
+          {
+            path: ':weAreType/:informationId',
+           loadChildren: '../weare-information/weare-information.module#WeareInformationPageModule'
+          },
+          {
+            path: 'ekkids',
+           loadChildren: '../weare-information/weare-information.module#WeareInformationPageModule'
+          },
+          {
+            path: 'ekkleunder',
+           loadChildren: '../weare-information/weare-information.module#WeareInformationPageModule'
+          },
         ]
       },
       {
@@ -58,11 +78,17 @@ const routes: Routes = [
             path: '',
             loadChildren: '../more/more.module#MorePageModule'
           },
-          { path: 'about', 
+          { path: 'about',
             loadChildren: '../about/about.module#AboutPageModule' 
+          },
+          { path: 'about/:branchId', 
+            loadChildren: '../about-detail/about-detail.module#AboutDetailPageModule' 
           },
           { path: 'areas', 
             loadChildren: '../areas/areas.module#AreasPageModule' 
+          },
+          { path: 'areas/:areaId', 
+            loadChildren: '../area-detail/area-detail.module#AreaDetailPageModule' 
           },
           { 
             path: 'notes', 
@@ -75,19 +101,25 @@ const routes: Routes = [
           { 
             path: 'notes/:noteId', 
             loadChildren: '../notes-details/notes-details.module#NotesDetailsPageModule'
+          },
+          {
+            path: 'profile',
+            loadChildren: '../profile/profile.module#ProfilePageModule'
+          },
+          { path: 'links',
+            loadChildren: '../links/links.module#LinksPageModule'
+          },
+          {
+            path: 'wallpapers',
+            loadChildren: '../wallpapers/wallpapers.module#WallpapersPageModule'
           }
         ]
-      },
-      {
-        path: '',
-        redirectTo: '/tabs/ekklenews',
-        pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/ekklenews',
+    redirectTo: '/tabs/events',
     pathMatch: 'full'
   }
 ];

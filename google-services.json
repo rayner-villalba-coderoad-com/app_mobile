@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:597520813594:android:611866705d6a2537",
+        "mobilesdk_app_id": "1:597520813594:android:934cecbc443a8263",
         "android_client_info": {
-          "package_name": "com.ekklesia.app"
+          "package_name": "com.ekklesia.app.mobile"
         }
       },
       "oauth_client": [

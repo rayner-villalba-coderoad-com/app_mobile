@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, ToastController } from "@ionic/angular";
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PreachingsService } from '@services/preachings/preachings.service';
 
 import { OnDestroy } from "@angular/core";
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from "rxjs";
 
 @Component({
   selector: 'app-preaching-details',
@@ -13,15 +13,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./preaching-details.page.scss'],
 })
 export class PreachingDetailsPage implements OnInit, OnDestroy {
-  preaching : any;
+  preaching$ : Observable<any>;
   preachingId = null;
   subscription: Subscription;
 
-  constructor(public socialSharing: SocialSharing, private route: ActivatedRoute, private preachingsService: PreachingsService, private loadingController: LoadingController) { }
+  constructor(public socialSharing: SocialSharing, private route: ActivatedRoute, private preachingsService: PreachingsService, private loadingController: LoadingController, public toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.preachingId = this.route.snapshot.params['preachingId'];
-    console.log(this.preachingId);
      if (this.preachingId)  {
        this.loadPreaching();
      }
@@ -33,9 +32,9 @@ export class PreachingDetailsPage implements OnInit, OnDestroy {
     });
     await loading.present();
  
-    this.subscription = this.preachingsService.getPreaching(this.preachingId).subscribe(res => {
+    this.preaching$ = this.preachingsService.getPreaching(this.preachingId);
+    this.subscription = this.preaching$.subscribe(res => {
       loading.dismiss();
-      this.preaching = res;
     });
   }
 
@@ -44,9 +43,32 @@ export class PreachingDetailsPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+
+  share(preaching) {
+    const { title, description, link } = preaching;
+    
+    this.socialSharing.share(description, title, null, link).then(()=> {
+      //this.displayMessage();
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  async displayMessage() {
+    const toast = await this.toastCtrl.create({
+      showCloseButton: true,
+      color: 'primary',
+      closeButtonText: 'Cerrar',
+      message: '¡Gracias por compartir esta Enseñanza!',
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.present();
+  }
+
   async shareWhatsapp(preaching) {
     this.socialSharing.shareViaWhatsApp(preaching.description, preaching.banner, preaching.link).then(() => {
-      console.log('Exitos');
     }).catch(error => {
        console.log(error);
     });

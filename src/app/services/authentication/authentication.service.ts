@@ -6,9 +6,11 @@ import { auth } from 'firebase/app';
 import { User } from './user.model'; // optional
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Platform } from "@ionic/angular";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ import { switchMap } from 'rxjs/operators';
 export class AuthenticationService {
   user$: Observable<User>;
 
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private facebook: Facebook) {
+  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private facebook: Facebook, private googlePlus: GooglePlus, private platform: Platform) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
           // Logged in
@@ -34,9 +36,31 @@ export class AuthenticationService {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  googleLogin(): Promise<void> {
-    const provider = new auth.GoogleAuthProvider();
-    return this.socialSignInRedirect(provider);
+  googleLogin() {
+    if (this.isCordova()) {
+      return this.nativeGoogleLogin();
+    } else {
+      const provider = new auth.GoogleAuthProvider();
+      return this.authLogin(provider);
+    }
+  }
+  
+  private isCordova() {
+    return this.platform.is('cordova');
+  }
+
+  private async nativeGoogleLogin() {
+    try {
+      const gPlusUser = await this.googlePlus.login({
+        //'webClientId': 'AIzaSyBH0_gDCRogi6qKd6Sx6dguvblXlqQhI4U.apps.googleusercontent.com', // Only for android 
+        'offline': true,
+        'scopes': 'profile email'
+      });
+
+      return this.afAuth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(gPlusUser.idToken));
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   private socialSignInRedirect(provider)  {
@@ -81,8 +105,22 @@ export class AuthenticationService {
 
   //Social Provider logins
   facebookLogin(): Promise<any> {
-    const provider = new auth.FacebookAuthProvider();
-    return this.authLogin(provider);
+    if(this.isCordova()) {
+      return this.nativeFacebookLogin();
+    } else {
+      const provider = new auth.FacebookAuthProvider();
+      return this.authLogin(provider);
+    }
+  }
+
+  private async nativeFacebookLogin() {
+    try {
+      const facebookUser = await this.facebook.login(['public_profile', 'email']);
+      const facebookCredential = auth.FacebookAuthProvider.credential(facebookUser.authResponse.accessToken);
+      return this.afAuth.auth.signInWithCredential(facebookCredential);
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   logout() {

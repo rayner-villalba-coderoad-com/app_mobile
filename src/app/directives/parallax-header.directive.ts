@@ -10,6 +10,7 @@ import { DomController } from '@ionic/angular';
 export class ParallaxHeaderDirective implements AfterViewInit {
   @Input('parallaxHeader') imagePath: string;
 	@Input('parallaxHeight') parallaxHeight: number;
+	@Input('parallaxPixel') parallaxPixel: boolean;
 
 	private headerHeight: number;
 	private header: HTMLDivElement;
@@ -25,9 +26,14 @@ export class ParallaxHeaderDirective implements AfterViewInit {
       this.header = this.renderer.createElement('div');
 
       this.renderer.insertBefore(this.element.nativeElement, this.header, this.element.nativeElement.firstChild);
-
       this.renderer.setStyle(this.header, 'background-image', 'url(' + this.imagePath + ')');
-      this.renderer.setStyle(this.header, 'height', this.headerHeight + 'px');
+      
+      if (this.parallaxPixel) {
+        this.renderer.setStyle(this.header, 'height', this.headerHeight + 'px');
+      } else {
+        this.renderer.setStyle(this.header, 'height', this.headerHeight + '%');
+      }
+     
       this.renderer.setStyle(this.header, 'background-size', 'cover');
     });
   }

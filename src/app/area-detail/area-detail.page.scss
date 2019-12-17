@@ -1,0 +1,28 @@
+.area-information {
+  .main-content {
+    padding: 0;
+    .description {
+      text-align: justify;
+      font-weight: lighter;
+      padding: 0 15px;
+    }
+
+    .field-container {
+      padding: 0 15px;
+    }
+
+    ion-grid {
+      margin: 15px;
+      ion-card {
+        margin: 0;
+
+        .card-title {
+          padding: 5px 0;
+          text-align: center;
+          font-size: 1rem;
+          color: black;
+        }
+      }
+    }
+  }  
+}

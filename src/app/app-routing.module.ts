@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuard] },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' }
+  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule'},
+  { path: 'preaching-reading', loadChildren: './preaching-reading/preaching-reading.module#PreachingReadingPageModule' }
 ];
 @NgModule({
   imports: [

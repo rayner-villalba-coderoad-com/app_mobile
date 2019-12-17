@@ -1,13 +1,55 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>ekklenews</ion-title>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-title *ngIf="!displaySearch">Eventos</ion-title>
   </ion-toolbar>  
 </ion-header>
 
 <ion-content class="card-background-page">
-  <ion-card *ngFor="let event of events"  (click)="getEventDetails(event)">
-    <img [src]="event.banner"/>
-    <div class="card-title">{{event.title}}</div>
-    <div class="card-subtitle">{{event.subtitle}}</div>
-  </ion-card>
+  <ion-list>
+    <ion-card *ngFor="let event of (events$ | async)">
+      <div class="image-shell">
+        <app-image-shell [src]="event.banner" (click)="getEventDetails(event)"></app-image-shell>
+      </div>
+      <ion-card-content>
+          <ion-card-title class="text-shell" [ngClass]="{'text-loaded': event.title}">
+            {{event.title}}
+          </ion-card-title>
+          <div class="share-button">
+            <ion-button fill="clear" color="warning" (click)="addToCalendar(event)">
+              <ion-icon name='calendar'></ion-icon>
+              Agendar
+            </ion-button>
+          </div>
+          <p class="description text-shell" [ngClass]="{'text-loaded': event.subtitle}">
+            {{event.subtitle}}
+          </p>
+        </ion-card-content>
+      <ion-row no-padding>
+        <ion-col size="6" *ngIf="event.type === 'video'">
+          <ion-button fill="clear" expand="full" color="danger" 
+            (click)="playVideo(event)">
+            <ion-icon name='videocam'></ion-icon>
+            Ver
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" *ngIf="event.type === 'read'">
+          <ion-button fill="clear" expand="full" color="danger" (click)="getEventDetails(event)">
+            <ion-icon name='book'></ion-icon>
+            Leer
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button fill="clear" expand="full" color="secondary" (click)="share(event)">
+            <ion-icon name='share'></ion-icon>
+            Compartir
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <p class="empty-message" *ngIf="(events$ | async)?.length === 0" text-center>
+      <ion-text>
+        No se ha encontrado ningún evento.     
+      </ion-text>
+    </p>
+  </ion-list>
 </ion-content>

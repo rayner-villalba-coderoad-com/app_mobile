@@ -1,0 +1,64 @@
+.main-content {
+	padding: 0;
+  .preaching-titles {
+		button {
+			padding: 0;
+		}
+		ion-icon {
+			font-size: 2rem;
+			color: white;
+		}		
+	}
+	
+	.preaching-buttons {
+		display: flex;
+		width: 100%;
+		margin: 1rem auto;
+		justify-content: center;
+
+		.preaching-button {
+			width: 25%;
+			ion-icon {
+				width: 100%;
+				font-size: 3em;
+				color: white;
+			}
+		}
+	}
+	
+  h2 {
+		font-weight: bold;
+		color: white;
+		text-align: left;
+	}
+	.verse {
+		font-weight: lighter;
+		margin: 0;
+		padding: 0 15px;
+		p {
+      margin: 0;
+		}
+		h5 {
+			margin: 0;
+		}
+	}
+	.subtitle {
+		padding-left: 15px;
+	}
+	.description {
+		margin-top: 0;
+		text-align: justify;
+		padding: 0 15px;
+		.paragraph {
+		  p {
+				margin-top: 0;
+			}	
+		}
+	}
+	.praying {
+		padding: 0 15px;
+		p {
+			margin: 0;
+		}
+	}
+}

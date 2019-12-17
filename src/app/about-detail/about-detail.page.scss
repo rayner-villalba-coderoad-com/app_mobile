@@ -1,0 +1,14 @@
+.branch-information {
+  .main-content {
+    .field-detail {
+      h5, p {
+        margin: 0;
+      }
+      ion-button {
+        .button-native {
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+} 

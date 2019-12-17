@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CallNumber } from "@ionic-native/call-number/ngx";
+import { Observable, Subscription } from "rxjs";
+import { Branch } from "@services/branches/branch.model";
+import { BranchesService } from "@services/branches/branches.service";
+import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
+import { OnDestroy } from "@angular/core";
 
 @Component({
   selector: 'app-about',
@@ -7,15 +12,27 @@ import { CallNumber } from "@ionic-native/call-number/ngx";
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage implements OnInit {
-  imageURL: string;
-  constructor(private callNumber: CallNumber) { }
-
+  branches$: Observable<Branch[]>;
+  defaultImage: string;
+  subscription: Subscription;
+  constructor(private branchesService: BranchesService, private router: Router,public loadingController: LoadingController) { }
+ 
   ngOnInit() {
-    this.imageURL = 'http://www.ekklesia.net/wp-content/uploads/2017/03/banner-PORTAL.jpg';
+    this.defaultImage = '/assets/img/info_branch.jpg';
+    this.loadBranches();
   }
-  call() {
-    this.callNumber.callNumber('+59122317178', true)
-    .then(res => console.log('Launched dialer!', res))
-    .catch(err => console.log('Error launching dialer', err));
+  async loadBranches() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...'
+    });
+    await loading.present();
+    this.branches$ = this.branchesService.getBranches();
+    this.branches$.subscribe(res => {
+      loading.dismiss();
+    });  
+  }
+
+  getBranchDetail(branch) {
+    this.router.navigate(['tabs/more/about', branch.id]);
   }
 }

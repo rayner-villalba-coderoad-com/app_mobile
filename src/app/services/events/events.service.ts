@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  map,
+  switchMap,
+  debounceTime,
+  distinctUntilChanged
+} from 'rxjs/operators';
+
 
 export interface EventEk {
   id: string;
@@ -24,21 +31,34 @@ export class EventsService {
   private eventsCollection: AngularFirestoreCollection<EventEk>; 
   private events: Observable<EventEk[]>;
 
-  constructor(public db: AngularFirestore) { 
+  constructor(public db: AngularFirestore, private database: AngularFireDatabase) { 
     this.eventsCollection = db.collection<EventEk>('events');
-    this.events = this.eventsCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(value => {
-          const id = value.payload.doc.id;
-          const data = value.payload.doc.data();
-          return { id, ...data };
-        });
-      })
-    )  
+    this.events = this.eventsCollection.valueChanges();
   }
 
-  getEvents() {
-    return this.events;
+  getEvents(start: BehaviorSubject<string>): Observable<any[]> {
+    return start.pipe(
+      switchMap(startText => {
+        const endText = startText + '\uf8ff';
+        let query;
+        if (startText !== '') {
+          query = this.db.collection('events',ref => ref.orderBy('title').startAt(startText).endAt(endText));
+        } else {
+          query = this.db.collection('events',ref => ref.orderBy('eventDate', 'desc'));
+        }
+        return query.snapshotChanges().pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          map((actions: any) => {
+            return actions.map(value => {
+              const id = value.payload.doc.id;
+              const data = value.payload.doc.data();
+              return { id, ...data };
+            });
+          })
+        );
+     })
+    ); 
   }
 
   getEvent(id) {

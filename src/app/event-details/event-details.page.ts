@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, ToastController } from "@ionic/angular";
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { EventsService } from '@services/events/events.service';
 import { OnDestroy } from "@angular/core";
-import { Subscription } from 'rxjs';
-
+import { Subscription, Observable } from "rxjs";
+import { CallNumber } from "@ionic-native/call-number/ngx";
 
 @Component({
   selector: 'app-event-details',
@@ -14,17 +14,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./event-details.page.scss'],
 })
 export class EventDetailsPage implements OnInit, OnDestroy {
-  eventEk : any;
+  eventEk$: Observable<any>;
   eventId = null;
   subscription: Subscription;
   
-  constructor(public socialSharing: SocialSharing, private route: ActivatedRoute, private eventsService: EventsService, private loadingController: LoadingController) {
-
-   }
+  constructor(
+    public socialSharing: SocialSharing, 
+    public toastCtrl: ToastController,
+    private route: ActivatedRoute, 
+    private eventsService: EventsService, 
+    private callNumber: CallNumber,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.eventId = this.route.snapshot.params['eventId'];
-    console.log(this.eventId);
      if (this.eventId)  {
        this.loadEvent();
      }
@@ -36,9 +39,9 @@ export class EventDetailsPage implements OnInit, OnDestroy {
     });
     await loading.present();
  
-    this.subscription = this.eventsService.getEvent(this.eventId).subscribe(res => {
+    this.eventEk$ = this.eventsService.getEvent(this.eventId);
+    this.subscription = this.eventEk$.subscribe(res => {
       loading.dismiss();
-      this.eventEk = res;
     });
   }
   
@@ -47,19 +50,32 @@ export class EventDetailsPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  async shareWhatsapp(eventEk) {console.log(eventEk);
-    this.socialSharing.shareViaWhatsApp(eventEk.description, eventEk.banner, eventEk.link).then(() => {
-      console.log('Exitos');
+  share(event) {
+    const { title, description, link } = event;
+    
+    this.socialSharing.share(description, title, null, link).then(()=> {
+      this.displayMessage();
     }).catch(error => {
-       console.log(error);
+      console.log(error);
     });
   }
 
-  async shareFacebook(eventEk) {
+  async displayMessage() {
+    const toast = await this.toastCtrl.create({
+      showCloseButton: true,
+      color: 'primary',
+      closeButtonText: 'Cerrar',
+      message: '¡Gracias por compartir!',
+      duration: 3000,
+      position: 'bottom'
+    });
 
+    toast.present();
   }
-
-  async shareTwitter(eventEk) {
-
+  
+  call(contact) {
+    this.callNumber.callNumber(contact, true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
   }
 }

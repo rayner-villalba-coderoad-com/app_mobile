@@ -1,0 +1,90 @@
+<ion-header>
+    <ion-toolbar color="primary" mode="ios">
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="/tabs/weare/{{weAreType}}"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content class="we-are-information" [scrollEvents]="true" *ngIf="detail$ | async as detail" [parallaxHeader]="detail.path" [parallaxHeight]="42">
+  <div class="main-content">
+    <ion-text color="primary" *ngIf="detail.title">
+       <h4 text-center>{{detail.title}}</h4>
+    </ion-text>
+    <h5 *ngIf="detail.subtitle" text-center>{{detail.subtitle}}</h5>
+    <p class="description">{{detail.description}}</p>
+    <ul class="field-container" *ngIf="detail.subnetworks">
+      <li *ngFor="let subnetwork of detail.subnetworks">
+        {{ subnetwork }}
+      </li>
+    </ul>
+    <div class="field-container" *ngIf="detail.leaders">
+      <ion-text color="primary">
+        <h4>Líderes</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let leader of detail.leaders">
+          {{ leader }}
+        </li>
+      </ul>
+    </div>   
+    <div class="field-container" *ngIf="detail.leaders1">
+      <ion-text color="primary">
+        <h4>Líderes</h4>
+      </ion-text>
+      <ion-text color="primary">
+        <h4>{{detail.leaders1Name}}</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let subleader of detail.leaders1">
+          {{ subleader }}
+        </li>
+      </ul>
+    </div> 
+    <div class="field-container" *ngIf="detail.leaders2">
+      <ion-text color="primary">
+        <h4>{{detail.leaders2Name}}</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let subleader2 of detail.leaders2">
+          {{ subleader2 }}
+        </li>
+      </ul>
+    </div>
+    <div class="field-container" *ngIf="detail.leaders3">
+      <ion-text color="primary">
+        <h4>{{detail.leaders3Name}}</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let subleader3 of detail.leaders3">
+          {{ subleader3 }}
+        </li>
+      </ul>
+    </div> 
+    <div class="field-container" *ngIf="detail.leaders4">
+      <ion-text color="primary">
+        <h4>{{detail.leaders4Name}}</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let subleader4 of detail.leaders4">
+          {{ subleader4 }}
+        </li>
+      </ul>
+    </div>   
+    <div class="field-container" *ngIf="detail.leaders5">
+      <ion-text color="primary">
+        <h4>{{detail.leaders5Name}}</h4>
+      </ion-text>
+      <ul>
+        <li *ngFor="let subleader5 of detail.leaders5">
+          {{ subleader5 }}
+        </li>
+      </ul>
+    </div>      
+    <div class="field-container" *ngIf="detail.contact">
+      <ion-text color="primary">
+        <h4>Contacto</h4>
+      </ion-text>
+      <a (click)="call(detail)">{{detail.contact}}</a>
+    </div>
+  </div>
+</ion-content>

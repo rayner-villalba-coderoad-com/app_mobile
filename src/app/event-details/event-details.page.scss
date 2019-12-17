@@ -1,6 +1,12 @@
 .main-content {
 	background-color: #fff;
-	padding: 20px;
+	padding: 0 20px;
+	.share-button {
+		margin-left: 34%;
+	}
+  .description {
+		text-align: justify;
+	}
 
 	.share {
 		.whatsapp {

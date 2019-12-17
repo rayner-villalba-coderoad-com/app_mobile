@@ -1,41 +1,126 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Enseñanzas</ion-title>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-title *ngIf="!displaySearch">Enseñanzas</ion-title>
+    <ion-searchbar *ngIf="displaySearch" type="text" placeholder="Buscar" 
+                   #searchInput
+                   autocomplete="true"
+                   showCancelButton="true"
+                   cancelButtonText="Cancelar"
+                   (keyup)="filterPreachings(searchInput.value)"  
+                   debounce="500" animated (ionCancel)="cancelSearch()"></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!displaySearch" (click)="search()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card *ngFor="let preaching of preachings">
-    <div class="banner-image">
-      <img [src]="preaching.banner"/>
+<ion-content class="preachings-container">
+  <div *ngIf="searching" class="spinner-container">
+      <ion-spinner name="crescent"></ion-spinner>
+  </div>   
+  <ion-list>
+    <div class="gallery">
+      <div class="image-container" 
+           *ngFor="let preaching of preachings" 
+           [hidden]="preaching.type==='audio' && preaching.type==='read'"
+           (click)="goPreachingDetail(preaching)">
+           <app-image-shell [src]="preaching.banner" 
+                            [fallbackUrl]="'https://picsum.photos/id/685/200/100'"></app-image-shell>
+      </div>
+
     </div>
-    <ion-card-content>
-      <ion-card-title>
-        {{preaching.title}}
-      </ion-card-title>
-      <p>
-        {{preaching.description}}
-      </p>
-    </ion-card-content>
-    <ion-row no-padding>
-        <ion-col size="5" *ngIf="preaching.videoLink !== ''">
-          <ion-button fill="clear" expand="full" color="danger" (click)="openVideo(preaching.videoId)">
-            <ion-icon name='videocam'></ion-icon>
-            Ver
-          </ion-button>
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="images">
+            <div class="image-container" *ngFor="let preaching of preachings" 
+               [hidden]="preaching.type==='audio' && preaching.type==='read'"
+               (click)="goPreachingDetail(preaching)">
+              <app-image-shell [src]="preaching.banner" [fallbackUrl]="'https://picsum.photos/id/685/200/100'"></app-image-shell>
+            </div>  
+          </div> 
         </ion-col>
-        <ion-col size="5" *ngIf="preaching.link !== ''">
-          <ion-button fill="clear" expand="full" color="danger" (click)="getPreachingDetails(preaching)">
-            <ion-icon name='book'></ion-icon>
-            Leer
+      </ion-row>
+    </ion-grid> -->
+      <!-- <ion-list-header *ngIf="!searching">  
+        <ion-segment [(ngModel)]="segments" color="primary" mode="ios" (ionChange)="segmentChanged($event)">
+          <ion-segment-button value="video">
+            <ion-label>Video</ion-label>
+            <ion-icon name="videocam"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="audio">
+            <ion-label>Audio</ion-label>
+            <ion-icon src="assets/headphones-solid.svg"></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button value="read">
+            <ion-label>Lectura</ion-label>
+            <ion-icon name="book"></ion-icon>
+          </ion-segment-button> 
+        </ion-segment>
+      </ion-list-header>
+      <ion-card *ngFor="let preaching of preachings" [hidden]="preaching.type==='audio'">
+          <div class="banner-image image-shell" (click)="getPreachingDetails(preaching)">
+            <app-image-shell [src]="preaching.banner"></app-image-shell>
+          </div>
+          <ion-card-content>
+            <ion-card-title text-center>
+              {{preaching.title}}
+            </ion-card-title>           
+            <p class="description">
+              {{preaching.description}}
+            </p>
+          </ion-card-content>
+          <ion-row no-padding>
+              <ion-col size="6" *ngIf="preaching.type === 'video'">
+                <ion-button fill="clear" expand="full" color="danger" 
+                  (click)="getPreachingDetails(preaching)">
+                  <ion-icon name='videocam'></ion-icon>
+                  Ver
+                </ion-button>
+              </ion-col>
+              <ion-col size="6" *ngIf="preaching.type === 'read'">
+                <ion-button fill="clear" expand="full" color="danger" 
+                  (click)="getPreachingDetails(preaching)">
+                  <ion-icon name='book'></ion-icon>
+                  Leer
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button fill="clear" expand="full" color="primary" (click)="share(preaching)">
+                  <ion-icon name='share'></ion-icon>
+                  Compartir
+                </ion-button>
+              </ion-col>
+            </ion-row>  
+        </ion-card> 
+        <ion-item *ngFor="let preaching of preachings" 
+                  [hidden]="preaching.type==='read' || preaching.type==='video'"
+                  [disabled]="preaching.progress> 0 && preaching.progress < 100">
+          <ion-avatar slot="start" (click)="getPreachingDetails(preaching)">
+            <div class="banner-image image-shell">
+              <app-image-shell [src]="preaching.banner"></app-image-shell>
+            </div>
+          </ion-avatar>
+          <ion-label (click)="getPreachingDetails(preaching)">
+            <h2>{{preaching.title}}</h2>
+            <p>{{preaching.subtitle}}</p>
+          </ion-label>
+          <p *ngIf="preaching.progress> 0 && preaching.progress < 100" 
+              color="primary" 
+              >{{preaching.progress}}%</p>
+          <ion-button *ngIf="canDownload(preaching)" fill="clear" color="danger" (click)="downloadAudio(preaching)">
+            <ion-icon slot="icon-only" name="cloud-download"></ion-icon>
           </ion-button>
-        </ion-col>
-        <ion-col size="7">
-          <ion-button fill="clear" expand="full" color="secondary" (click)="share(preaching)">
-            <ion-icon name='share'></ion-icon>
-            Compartir
+          <ion-button fill="clear" (click)="getPreachingDetails(preaching)">
+            <ion-icon slot="icon-only" name="play"></ion-icon>
           </ion-button>
-        </ion-col>
-      </ion-row>  
-  </ion-card>
+        </ion-item>
+        <p class="empty-message" *ngIf="preachings?.length < 1" text-center>
+          <ion-text>
+            No se ha encontrado ninguna enseñanza.     
+          </ion-text>
+        </p> -->
+  </ion-list>
 </ion-content>

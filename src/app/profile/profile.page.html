@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/more"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveProfile(profileForm)" [disabled]="!profileForm.valid">
+        <ion-icon src="/assets/save-solid.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile">
+  <div class="profile-avatar">
+    <ion-avatar (click)="getAvatar()">
+      <img src="{{myPhoto}}">
+    </ion-avatar>
+        
+    <h2 [hidden]="!profile?.name" text-center>{{profile?.name}}</h2>
+  </div>
+  <div class="profile-information" padding>
+    <ion-text color="primary">
+      <h4>Información</h4>
+    </ion-text>
+    <form [formGroup]="profileForm" class="list-form">
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="person" item-start></ion-icon>
+            Nombre
+          </ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <p ion-text class="text08" *ngIf="profileForm.get('name').touched && profileForm.get('name').hasError('required')">
+          <ion-text color="warning">
+            Campo requerido
+          </ion-text>
+        </p>
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="call" item-start></ion-icon>
+            Celular o Teléfono
+          </ion-label>
+          <ion-input type="tel" formControlName="phone"></ion-input>
+        </ion-item>
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="clipboard" item-start></ion-icon>
+            Edad 
+          </ion-label>
+          <ion-input type="number" formControlName="age"></ion-input>
+        </ion-item>
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="mail" item-start></ion-icon>
+            Correo Electrónico
+          </ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="contacts" item-start></ion-icon>
+            Red
+          </ion-label>
+          <ion-select formControlName="network" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let val of networks" [value]="val.value">
+              {{val.label}}
+           </ion-select-option> 
+          </ion-select>
+        </ion-item>
+      </form>
+  </div>
+</ion-content>

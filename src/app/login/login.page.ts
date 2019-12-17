@@ -133,17 +133,17 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  facebookLogin() {
-    this.authenticationService.facebookLogin().then(res => {
-      console.log(res);
-      this.goToHome();
-    }).catch(error => {
+  async facebookLogin() {
+    try {
+      await this.authenticationService.facebookLogin();
+      this.goToHome(); 
+    } catch(error) {
       console.log(error);
-    })
+      this.displayError('Usuario no válido');  
+    }
   }
 
   goToRegister() {
     this.router.navigate(['register'])
   }
-
 }
